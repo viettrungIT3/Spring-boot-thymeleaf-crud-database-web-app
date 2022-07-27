@@ -15,6 +15,7 @@
 <body>
 <div class="container my-2">
     <h1>Employees List</h1>
+    <a th:href = "@{/addEmployeeForm}" class="btn btn-primary btn-sm mb-3"> Add Employee </a>
     <table border="1" class="table table-striped table-responsive-md">
         <thead>
         <tr>
@@ -29,7 +30,7 @@
             <td th:text="${e.getId()}"></td>
             <td th:text="${e.getFirstName()}"></td>
             <td th:text="${e.getLastName()}"></td>
-            <td th:text="${e.getLastName()}"></td>
+            <td th:text="${e.getEmail()}"></td>
         </tr>
         </tbody>
     </table>

@@ -5,10 +5,7 @@ import com.example.springboot.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class EmployeeController {
@@ -40,7 +37,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/employees/update/{id}")
-    public String showFormForUpdate(@PathVariable( value = "id") Long id, Model model) {
+    public String updateEmployeeForm(@PathVariable(value = "id") Long id, Model model) {
 
         // get employee from the service
         Employee employee = employeeService.getEmployeeById(id);
@@ -48,5 +45,13 @@ public class EmployeeController {
         // set employee as a model attribute to pre-populate the form
         model.addAttribute("employee", employee);
         return "updateEmployee";
+    }
+
+    @GetMapping("/employees/delete/{id}")
+    public String deleteEmployee(@PathVariable(value = "id") Long id) {
+
+        // call delete employee method
+        this.employeeService.deleteEmployeeById(id);
+        return "redirect:/";
     }
 }

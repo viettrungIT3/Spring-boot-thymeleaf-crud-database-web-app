@@ -32,7 +32,10 @@
             <td th:text="${e.getFirstName()}"></td>
             <td th:text="${e.getLastName()}"></td>
             <td th:text="${e.getEmail()}"></td>
-            <td><a th:href="@{/employees/update/{id}(id=${e.getId()})}" class="btn btn-primary">Update</a></td>
+            <td>
+                <a th:href="@{/employees/update/{id}(id=${e.getId()})}" class="btn btn-primary">Update</a>
+                <a th:href="@{/employees/delete/{id}(id=${e.getId()})}" class="btn btn-danger">Delete</a>
+            </td>
         </tr>
         </tbody>
     </table>

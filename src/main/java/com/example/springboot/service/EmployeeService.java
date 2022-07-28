@@ -1,7 +1,7 @@
 package com.example.springboot.service;
 
 import com.example.springboot.model.Employee;
-import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -13,4 +13,6 @@ public interface EmployeeService {
     Employee getEmployeeById(Long id);
 
     void deleteEmployeeById(Long id);
+
+    Page<Employee> findPaginated(int pageNo, int pageSize);
 }

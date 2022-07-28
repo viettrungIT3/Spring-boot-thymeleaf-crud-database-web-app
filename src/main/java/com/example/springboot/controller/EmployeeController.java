@@ -3,9 +3,12 @@ package com.example.springboot.controller;
 import com.example.springboot.model.Employee;
 import com.example.springboot.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class EmployeeController {
@@ -16,8 +19,9 @@ public class EmployeeController {
     // display list employees
     @GetMapping()
     public String viewHomePage(Model model) {
-        model.addAttribute("listE", employeeService.getAllEmployees());
-        return "index";
+//        model.addAttribute("listE", employeeService.getAllEmployees());
+//        return "index";
+        return findPaginated(1, model);
     }
 
     @GetMapping("/employees/create")
@@ -54,4 +58,21 @@ public class EmployeeController {
         this.employeeService.deleteEmployeeById(id);
         return "redirect:/";
     }
+
+    //pagination
+    @GetMapping("/page/{pageNo}")
+    public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model) {
+        int pageSize = 5;
+
+        Page<Employee> page = employeeService.findPaginated(pageNo, pageSize);
+        List<Employee> list = page.getContent();
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("listE", list);
+
+        return "index";
+    }
+
 }

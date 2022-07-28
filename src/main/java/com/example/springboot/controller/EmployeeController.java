@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -22,7 +23,7 @@ public class EmployeeController {
         return "index";
     }
 
-    @GetMapping("/addEmployeeForm")
+    @GetMapping("/employees/create")
     public String addEmployeeForm(Model model) {
         // create model attribute to bind form data
         Employee employee = new Employee();
@@ -30,11 +31,22 @@ public class EmployeeController {
         return "addEmployeeForm";
     }
 
-    @PostMapping("/saveEmployee")
+    @PostMapping("/employees/save")
     public String saveEmployee(@ModelAttribute("employee") Employee employee) {
         // save employee to database
         employeeService.saveEmployee(employee);
         // back page index
         return "redirect:/";
+    }
+
+    @GetMapping("/employees/update/{id}")
+    public String showFormForUpdate(@PathVariable( value = "id") Long id, Model model) {
+
+        // get employee from the service
+        Employee employee = employeeService.getEmployeeById(id);
+
+        // set employee as a model attribute to pre-populate the form
+        model.addAttribute("employee", employee);
+        return "updateEmployee";
     }
 }
